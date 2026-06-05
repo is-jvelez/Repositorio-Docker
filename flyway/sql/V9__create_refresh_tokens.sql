@@ -11,7 +11,6 @@ BEGIN
         CreatedAt   DATETIME2       NOT NULL,
         RevokedAt   DATETIME2       NULL,
         IsRevoked   BIT             NOT NULL DEFAULT 0,
-
         CONSTRAINT PK_RefreshTokens PRIMARY KEY (Id),
         CONSTRAINT FK_RefreshTokens_Users FOREIGN KEY (UserId)
             REFERENCES Users(Id) ON DELETE CASCADE
