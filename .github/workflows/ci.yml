@@ -28,6 +28,13 @@ jobs:
         run: dotnet build AuthService.slnx --no-restore
 
       - name: Test
+        env:
+          ASPNETCORE_ENVIRONMENT: Development
+          JwtSettings__Secret: IntegrationSecretKey_AuthService_123456789!
+          JwtSettings__Issuer: AuthService
+          JwtSettings__Audience: OrderFlowApp
+          JwtSettings__AccessTokenExpirationMinutes: "60"
+          JwtSettings__RefreshTokenExpirationDays: "7"
         run: dotnet test AuthService.slnx --no-build
   
   docker-build:
