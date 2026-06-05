@@ -10,5 +10,8 @@
 # Environment (no subir secrets)
 .env
 
+# Test results y coverage
+**/TestResults/
+
 # Logs
 *.log
