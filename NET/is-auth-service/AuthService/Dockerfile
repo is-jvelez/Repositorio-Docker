@@ -4,7 +4,8 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore src/AuthService.slnx
+# RUN dotnet restore src/AuthService.slnx
+RUN dotnet restore src/AuthService.Api/AuthService.Api.csproj
 
 RUN dotnet publish \
     src/AuthService.Api/AuthService.Api.csproj \
