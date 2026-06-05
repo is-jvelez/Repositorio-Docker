@@ -1,0 +1,66 @@
+Summary
+  Generated on: 19/5/2026 - 15:23:48
+  Coverage date: 19/5/2026 - 15:23:17 - 19/5/2026 - 15:23:39
+  Parser: MultiReport (2x Cobertura)
+  Assemblies: 5
+  Classes: 36
+  Files: 36
+  Line coverage: 40.2%
+  Covered lines: 402
+  Uncovered lines: 596
+  Coverable lines: 998
+  Total lines: 1790
+  Branch coverage: 13.3% (34 of 254)
+  Covered branches: 34
+  Total branches: 254
+  Method coverage: 75.2% (88 of 117)
+  Full method coverage: 67.5% (79 of 117)
+  Covered methods: 88
+  Fully covered methods: 79
+  Total methods: 117
+
+AuthService.Api                                                                       25%
+  AuthService.Api.Controllers.AuthController                                        78.5%
+  AuthService.Api.Middleware.GlobalExceptionMiddleware                              87.2%
+  Microsoft.AspNetCore.OpenApi.Generated                                               1%
+  Program                                                                            100%
+  System.Runtime.CompilerServices                                                      0%
+
+AuthService.Application                                                             96.5%
+  AuthService.Application.DTOs.Request.LoginRequest                                  100%
+  AuthService.Application.DTOs.Request.RefreshTokenRequest                           100%
+  AuthService.Application.DTOs.Request.RegisterRequest                               100%
+  AuthService.Application.DTOs.Request.RevokeTokenRequest                            100%
+  AuthService.Application.DTOs.Response.AuthResponse                                 100%
+  AuthService.Application.DTOs.Response.UserResponse                                 100%
+  AuthService.Application.Mappings.UserMappings                                      100%
+  AuthService.Application.Services.AuthService                                      94.3%
+  AuthService.Application.Validators.LoginRequestValidator                           100%
+  AuthService.Application.Validators.RefreshTokenRequestValidator                    100%
+  AuthService.Application.Validators.RegisterRequestValidator                        100%
+  AuthService.Application.Validators.RevokeTokenRequestValidator                     100%
+
+AuthService.Domain                                                                    98%
+  AuthService.Domain.Entities.RefreshToken                                           100%
+  AuthService.Domain.Entities.User                                                   100%
+  AuthService.Domain.Exceptions.DomainException                                      100%
+  AuthService.Domain.Exceptions.InvalidCredentialsException                          100%
+  AuthService.Domain.Exceptions.TokenNotFoundException                               100%
+  AuthService.Domain.Exceptions.TokenRevokedException                                100%
+  AuthService.Domain.Exceptions.UserAlreadyExistsException                           100%
+  AuthService.Domain.ValueObjects.Email                                             93.3%
+
+AuthService.Infrastructure                                                          34.5%
+  AuthService.Infrastructure.DependencyInjection.InfrastructureServiceExtensions     100%
+  AuthService.Infrastructure.Migrations.AppDbContextModelSnapshot                      0%
+  AuthService.Infrastructure.Migrations.InitRefreshTokens                              0%
+  AuthService.Infrastructure.Persistence.Configurations.RefreshTokenConfiguration    100%
+  AuthService.Infrastructure.Persistence.Configurations.UserConfiguration            100%
+  AuthService.Infrastructure.Persistence.Context.AppDbContext                        100%
+  AuthService.Infrastructure.Persistence.Repositories.RefreshTokenRepository         100%
+  AuthService.Infrastructure.Persistence.Repositories.UserRepository                 100%
+  AuthService.Infrastructure.Security.BcryptPasswordHasher                           100%
+  AuthService.Infrastructure.Security.JwtTokenGenerator                              100%
+
+AuthService.Shared                                                                   100%
+  AuthService.Shared.Wrappers.ApiResponse<T>                                         100%
