@@ -1,0 +1,79 @@
+services:
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
+    ports:
+      - "${SQL_PORT}:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd",
+             "-S", "localhost", "-U", "sa", "-P", "${SA_PASSWORD}",
+             "-Q", "SELECT 1", "-No"]
+      interval: 10s
+      retries: 10
+      start_period: 30s
+  
+  auth-api:
+    build:
+      context: ./NET/is-auth-service/AuthService
+      dockerfile: Dockerfile
+
+    container_name: auth-api
+
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      sqlserver-init:
+        condition: service_completed_successfully
+
+    ports:
+      - "${API_PORT}:8080"
+    
+    environment:
+
+      ASPNETCORE_ENVIRONMENT: Docker
+      ConnectionStrings__DefaultConnection: >
+        Server=sqlserver; Database=${DB_NAME}; User Id=sa; Password=${SA_PASSWORD}; TrustServerCertificate=True; Encrypt=False;
+      JwtSettings__Secret: ${JWT_SECRET}
+
+
+  sqlserver-init:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-init
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    environment:
+      MSSQL_SA_PASSWORD: ${SA_PASSWORD}
+    command: >
+      /bin/bash -c "
+      /opt/mssql-tools18/bin/sqlcmd -S sqlserver -U sa -P ${SA_PASSWORD} -No
+      -Q \"IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = '${DB_NAME}')
+           BEGIN CREATE DATABASE ${DB_NAME} END\"
+      "
+    restart: "no"
+
+  flyway:
+    image: flyway/flyway:10-alpine
+    container_name: flyway
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+      sqlserver-init:
+        condition: service_completed_successfully
+    environment:
+      FLYWAY_URL: "jdbc:sqlserver://sqlserver:1433;databaseName=${DB_NAME};encrypt=false;trustServerCertificate=true"
+      FLYWAY_USER: "sa"
+      FLYWAY_PASSWORD: ${SA_PASSWORD}
+    volumes:
+      - ./flyway/sql:/flyway/sql
+      - ./flyway/conf:/flyway/conf
+    command: migrate
+
+volumes:
+  sqlserver_data:
