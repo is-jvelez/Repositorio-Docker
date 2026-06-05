@@ -28,6 +28,8 @@ jobs:
         run: dotnet build AuthService.slnx --no-restore
 
       - name: Test
+        env:
+          ASPNETCORE_ENVIRONMENT: Development
         run: dotnet test AuthService.slnx --no-build
   
   docker-build:
